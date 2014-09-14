@@ -28,9 +28,9 @@ public class Lieferant implements Runnable {
 	}
 
 	/**
-	 * Generiert Teile für den angegebenen Teile
+	 * Generiert Teile fuer den angegebenen Teile
 	 * @param teiltyp
-	 * @return Stack der die Teile enthält
+	 * @return Stack der die Teile enthaelt
 	 */
 	public Stack<Teil> generiereTeile(Teiltyp teiltyp) {
 		Stack<Teil> stack = new Stack<Teil>();

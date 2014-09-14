@@ -67,7 +67,7 @@ public class Lagermitarbeiter extends Mitarbeiter {
 				rafs.get(cur.getTyp()).writeBytes(cur.getTyp().toString().toLowerCase() + arrayToText(cur.getNumbers()) + "\n");
 				lager.addTeil(cur);
 			} catch (IOException e) {
-				LOG.error("Fehler während dem Schreibvorgang", e);
+				LOG.error("Fehler waehrend dem Schreibvorgang", e);
 			}
 		}
 	}
