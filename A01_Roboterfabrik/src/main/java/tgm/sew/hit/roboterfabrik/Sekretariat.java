@@ -1,7 +1,7 @@
 package tgm.sew.hit.roboterfabrik;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,13 +20,13 @@ import tgm.sew.hit.roboterfabrik.teil.Teil;
  *
  */
 public class Sekretariat {
-	private Set<Montagemitarbeiter> montagemitarbeiter;
+	private List<Montagemitarbeiter> montagemitarbeiter;
 
 	private Lagermitarbeiter lagermitarbeiter;
 
 	public Sekretariat(Lagermitarbeiter lm, int anzahlMonteure) {
 		this.lagermitarbeiter = lm;
-		this.montagemitarbeiter = new HashSet<Montagemitarbeiter>();
+		this.montagemitarbeiter = new ArrayList<Montagemitarbeiter>();
 		this.monteureEinstellen(anzahlMonteure);
 	}
 
@@ -47,6 +47,10 @@ public class Sekretariat {
 	private int generiereThreadeeId() {
 		// TODO: no duplicates
 		return (int) (Math.random() * 1000) + 1;
+	}
+
+	public void befehleMonteur() {
+		this.montagemitarbeiter.get((int) (Math.random() * this.montagemitarbeiter.size()));
 	}
 
 	public void threadeeHinzufuegen() {

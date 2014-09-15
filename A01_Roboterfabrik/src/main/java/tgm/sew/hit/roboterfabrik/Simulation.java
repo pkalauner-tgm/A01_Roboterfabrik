@@ -1,6 +1,11 @@
 package tgm.sew.hit.roboterfabrik;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,9 +50,14 @@ public class Simulation {
 	 * @param location
 	 */
 	private static void configLogger(File location) {
-		System.setProperty("logFilename", location.getAbsolutePath() + File.separatorChar + "roboterfabrik.log");
+		LocalDateTime ldt = LocalDateTime.now();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+		System.setProperty("logFilename", location.getAbsolutePath() + File.separatorChar + "roboterfabrik - " + ldt.format(dtf) + ".log");
 		LoggerContext context = (LoggerContext) LogManager.getContext(false);
 		context.reconfigure();
+		File f = new File("${sys");
+		if (f.exists())
+			f.delete();
 	}
 
 	/**
