@@ -84,4 +84,13 @@ public class Lagermitarbeiter extends Mitarbeiter {
 			sb.append("," + i);
 		return sb.toString();
 	}
+	
+	/**
+	 * Ueberprueft, ob genug Teile fuer einen Threadee da sind.
+	 * Ein Threadee besteht aus 2 Augen, 2 Armen, 1 Rumpf und 1 Kettenantrieb.
+	 * @return Ob genug Teile fuer einen Threadee da sind
+	 */
+	private boolean genugTeile() {
+		return lager.teileDa(2, Teiltyp.AUGE) && lager.teileDa(2, Teiltyp.ARM) && lager.teileDa(1, Teiltyp.RUMPF) && lager.teileDa(1, Teiltyp.KETTENANTRIEB);
+	}
 }

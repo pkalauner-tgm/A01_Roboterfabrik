@@ -51,5 +51,16 @@ public class Lager {
 	public void removeTeil(Teil teil) {
 		teile.get(teil.getTyp()).pop();
 	}
+	
+	/**
+	 * Ueberprueft, ob genuegend Teile eines Teiltyps vorhanden sind
+	 * 
+	 * @param anzahl Die Anzahl der Teile
+	 * @param teiltyp Angabe des Teiltyps
+	 * @return Ob genuegend Teile eines Teiltyps vorhanden sind
+	 */
+	public boolean teileDa(int anzahl, Teiltyp teiltyp) {
+		return (teile.get(teiltyp).size() >= anzahl);
+	}
 
 }
