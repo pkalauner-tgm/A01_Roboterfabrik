@@ -36,7 +36,10 @@ public class Teil {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.typ.getName());
+		for (int i: numbers)
+			sb.append("," + i);
+		return sb.toString();
 	}
 }

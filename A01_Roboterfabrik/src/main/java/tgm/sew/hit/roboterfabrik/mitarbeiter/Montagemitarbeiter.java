@@ -1,5 +1,6 @@
 package tgm.sew.hit.roboterfabrik.mitarbeiter;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,10 +16,14 @@ public class Montagemitarbeiter extends Mitarbeiter implements Runnable {
 		
 	}
 
-	public Threadee zusammenbauen(Stack<Teil> teile) {
+	public Threadee zusammenbauen(Stack<Teil> teile, int id) {
 		LOG.debug("Zusammenbauen: " + teile);
-		// TODO: zusammenbauen
-		return null;
+		Threadee roboter = new Threadee(id, this.getId());
+		for (Teil t: teile) {
+			Arrays.sort(t.getNumbers());
+			roboter.addTeil(t);
+		}
+		return roboter;
 	}
 
 	@Override

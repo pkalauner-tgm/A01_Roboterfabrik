@@ -1,13 +1,22 @@
 package tgm.sew.hit.roboterfabrik.teil;
 
 public enum Teiltyp {
+	
+	AUGE("Auge"),
 
-	AUGE,
+	RUMPF("Rumpf"),
 
-	RUMPF,
+	ARM("Arm"),
 
-	ARM,
-
-	KETTENANTRIEB;
-
+	KETTENANTRIEB("Kettenatrieb");
+	
+	private String name;
+	
+	Teiltyp(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
 }

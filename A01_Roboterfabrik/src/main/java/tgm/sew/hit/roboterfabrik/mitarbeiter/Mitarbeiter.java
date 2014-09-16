@@ -7,5 +7,9 @@ public abstract class Mitarbeiter {
 	public Mitarbeiter(int id) {
 
 	}
+	
+	public int getId() {
+		return id;
+	}
 
 }

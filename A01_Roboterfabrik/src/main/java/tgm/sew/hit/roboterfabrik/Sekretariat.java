@@ -53,13 +53,10 @@ public class Sekretariat {
 		// TODO: no duplicates
 		return (int) (Math.random() * 1000) + 1;
 	}
-
+	
 	public void befehleMonteure(int anzahl) {
-		this.montagemitarbeiter.get((int) (Math.random() * this.montagemitarbeiter.size())).zusammenbauen(this.lagermitarbeiter.bereitstellen());
-	}
-
-	public void threadeeHinzufuegen() {
-
+		Montagemitarbeiter mm = this.montagemitarbeiter.get((int) (Math.random() * this.montagemitarbeiter.size()));
+		lagermitarbeiter.threadeeEinlagern(mm.zusammenbauen(this.lagermitarbeiter.bereitstellen(), generiereThreadeeId()));
 	}
 
 	/**
