@@ -1,7 +1,8 @@
 package tgm.sew.hit.roboterfabrik.lager;
 
+import java.util.Collections;
 import java.util.EnumMap;
-import java.util.Stack;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,48 +20,54 @@ import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
  */
 public class Lager {
 	private static final Logger LOG = LogManager.getLogger(Lager.class);
-	
-	private EnumMap<Teiltyp,Stack<Teil>> teile;
+
+	private Map<Teiltyp, Integer> anzahlTeile;
 
 	public Lager() {
-		initStacks();
+		initMap();
 	}
-	
+
 	/**
-	 * Initialisiert die Stacks in der EnumMap
+	 * Initialisiert die EnumMap
 	 */
-	private void initStacks() {
-		LOG.debug("Initialisiere Stacks");
-		this.teile = new EnumMap<Teiltyp,Stack<Teil>>(Teiltyp.class);
+	private void initMap() {
+		LOG.debug("Initialisiere Map");
+		this.anzahlTeile = Collections.synchronizedMap(new EnumMap<Teiltyp, Integer>(Teiltyp.class));
 		for (Teiltyp cur : Teiltyp.values())
-			teile.put(cur, new Stack<Teil>());
+			anzahlTeile.put(cur, 0);
 	}
-	
+
 	/**
 	 * Fuegt ein Teil hinzu
+	 * 
 	 * @param teil
 	 */
 	public void addTeil(Teil teil) {
-		teile.get(teil.getTyp()).add(teil);
+		int old = anzahlTeile.get(teil.getTyp());
+		anzahlTeile.put(teil.getTyp(), ++old);
 	}
 
 	/**
 	 * Entfernt ein Teil
+	 * 
 	 * @param teil
 	 */
-	public Teil removeTeil(Teiltyp teiltyp) {
-		return teile.get(teiltyp).pop();
+	public void removeTeil(Teiltyp teiltyp) {
+		int old = anzahlTeile.get(teiltyp);
+		anzahlTeile.put(teiltyp, --old);
 	}
-	
+
 	/**
 	 * Ueberprueft, ob genuegend Teile eines Teiltyps vorhanden sind
 	 * 
-	 * @param anzahl Die Anzahl der Teile
-	 * @param teiltyp Angabe des Teiltyps
+	 * @param anzahl
+	 *            Die Anzahl der Teile
+	 * @param teiltyp
+	 *            Angabe des Teiltyps
 	 * @return Ob genuegend Teile eines Teiltyps vorhanden sind
 	 */
 	public boolean teileDa(int anzahl, Teiltyp teiltyp) {
-		return (teile.get(teiltyp).size() >= anzahl);
+		return (anzahlTeile.get(teiltyp) >= anzahl);
 	}
 
 }

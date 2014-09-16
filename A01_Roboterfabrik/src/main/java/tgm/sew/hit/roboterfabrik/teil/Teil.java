@@ -33,4 +33,10 @@ public class Teil {
 	public void setNumbers(int[] numbers) {
 		this.numbers = numbers;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 }

@@ -1,11 +1,9 @@
 package tgm.sew.hit.roboterfabrik;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,8 +25,7 @@ import tgm.sew.hit.roboterfabrik.mitarbeiter.Lieferant;
 /**
  * Simulation
  * 
- * Hauptklasse
- * Hier werden die Konsolenargumente auf ihre Richtigkeit ueberprueft sowie die Simulation gestartet.
+ * Hauptklasse Hier werden die Konsolenargumente auf ihre Richtigkeit ueberprueft sowie die Simulation gestartet.
  * 
  * @author Paul Kalauner 4AHITT
  *
@@ -40,6 +37,8 @@ public class Simulation {
 	private static final int MAX_LAUFZEIT = 3600000;
 	private static final int MAX_ARBEITER = 1000;
 
+	public static boolean running;
+
 	public static void main(String[] args) {
 		if (!checkArgs(args))
 			LOG.error("Ungueltige Argumente");
@@ -47,6 +46,7 @@ public class Simulation {
 
 	/**
 	 * Setzt das Verzeichnis des Logfiles auf das angegebene
+	 * 
 	 * @param location
 	 */
 	private static void configLogger(File location) {
@@ -72,6 +72,7 @@ public class Simulation {
 	private static void start(int lieferanten, int monteure, int laufzeit, File lagerVerzeichnis, File logVerzeichnis) {
 		LOG.info("Starte Simulation");
 		configLogger(logVerzeichnis);
+		running = true;
 		Lager lager = new Lager();
 		Lagermitarbeiter lm = new Lagermitarbeiter(0, lager, lagerVerzeichnis);
 		Sekretariat sekretariat = new Sekretariat(lm, monteure);
@@ -79,6 +80,15 @@ public class Simulation {
 		Lieferant l = new Lieferant(sekretariat);
 		for (int i = 0; i < lieferanten; i++)
 			esLieferanten.execute(l);
+		
+		// Programm nach laufzeit beenden
+		new Timer().schedule(new java.util.TimerTask() {
+			@Override
+			public void run() {
+				LOG.info("Stoppe Simulation");
+				running = false;
+			}
+		}, laufzeit);
 	}
 
 	/**
@@ -107,7 +117,7 @@ public class Simulation {
 			String logPfad = cmd.getOptionValue("logs");
 			File lager = new File(lagerPfad);
 			File log = new File(logPfad);
-			
+
 			// Zahl der Lieferanten und Monteure muss ueber 0 sein
 			if (lieferanten <= 0 || monteure <= 0 || laufzeit <= 0 || lieferanten > MAX_ARBEITER || monteure > MAX_ARBEITER || laufzeit > MAX_LAUFZEIT) {
 				System.out.println("Bitte geben Sie gueltige Werte an:");

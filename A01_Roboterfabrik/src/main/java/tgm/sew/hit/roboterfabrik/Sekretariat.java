@@ -6,6 +6,9 @@ import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tgm.sew.hit.roboterfabrik.lager.Lagermitarbeiter;
 import tgm.sew.hit.roboterfabrik.mitarbeiter.Montagemitarbeiter;
 import tgm.sew.hit.roboterfabrik.teil.Teil;
@@ -20,6 +23,8 @@ import tgm.sew.hit.roboterfabrik.teil.Teil;
  *
  */
 public class Sekretariat {
+	private static final Logger LOG = LogManager.getLogger(Sekretariat.class);
+	
 	private List<Montagemitarbeiter> montagemitarbeiter;
 
 	private Lagermitarbeiter lagermitarbeiter;
@@ -49,8 +54,8 @@ public class Sekretariat {
 		return (int) (Math.random() * 1000) + 1;
 	}
 
-	public void befehleMonteur() {
-		this.montagemitarbeiter.get((int) (Math.random() * this.montagemitarbeiter.size()));
+	public void befehleMonteure(int anzahl) {
+		this.montagemitarbeiter.get((int) (Math.random() * this.montagemitarbeiter.size())).zusammenbauen(this.lagermitarbeiter.bereitstellen());
 	}
 
 	public void threadeeHinzufuegen() {
@@ -63,7 +68,7 @@ public class Sekretariat {
 	 */
 	public synchronized void empfangeLieferung(Stack<Teil> teile) {
 		lagermitarbeiter.einlagern(teile);
-		if (lagermitarbeiter.genugTeile()) befehleMonteur();
+		if (lagermitarbeiter.genugTeile()) befehleMonteure(1);
 	}
 
 }
