@@ -1,11 +1,8 @@
 package tgm.sew.hit.roboterfabrik;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 import tgm.sew.hit.roboterfabrik.teil.Teil;
-import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
 
 public class Threadee {
 
@@ -75,9 +72,18 @@ public class Threadee {
 		teile.add(this.armRechts);
 		teile.add(this.armLinks);
 		teile.add(this.rumpf);
-		teile.add(this.armRechts);
-		teile.add(this.armLinks);
+		teile.add(this.augeRechts);
+		teile.add(this.augeLinks);
 		return teile;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		// TODO Mathias
+		
+		return sb.toString();
 	}
 
 }

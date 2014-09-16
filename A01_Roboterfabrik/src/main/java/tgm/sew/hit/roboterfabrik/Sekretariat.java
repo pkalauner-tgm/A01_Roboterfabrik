@@ -60,6 +60,7 @@ public class Sekretariat {
 	 * @param teile Die gelieferten Teile des Lieferanten
 	 */
 	public synchronized void empfangeLieferung(Stack<Teil> teile) {
+		LOG.debug("Nehme Lieferung entgegen");
 		lagermitarbeiter.einlagern(teile);
 	}
 

@@ -61,7 +61,11 @@ public class Lagermitarbeiter {
 	}
 
 	public void threadeeEinlagern(Threadee threadee) {
-		// TODO ins Raf schreiben
+		try {
+			this.rafThreadee.writeBytes(threadee.toString());
+		} catch (IOException e) {
+			LOG.error("Fehler beim Schreiben in auslieferung.csv", e);
+		}
 	}
 
 	public synchronized Stack<Teil> bereitstellen() {
