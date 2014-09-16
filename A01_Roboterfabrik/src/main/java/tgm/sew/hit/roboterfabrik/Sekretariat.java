@@ -61,7 +61,7 @@ public class Sekretariat {
 	 * Lieferung entgegennehmen und Monteur beauftragen, einen Threadee zusammenzubauen
 	 * @param teile Die gelieferten Teile des Lieferanten
 	 */
-	public void empfangeLieferung(Stack<Teil> teile) {
+	public synchronized void empfangeLieferung(Stack<Teil> teile) {
 		lagermitarbeiter.einlagern(teile);
 		if (lagermitarbeiter.genugTeile()) befehleMonteur();
 	}

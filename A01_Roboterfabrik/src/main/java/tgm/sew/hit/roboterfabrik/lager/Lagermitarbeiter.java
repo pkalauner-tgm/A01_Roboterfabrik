@@ -51,8 +51,27 @@ public class Lagermitarbeiter extends Mitarbeiter {
 	}
 
 	public Stack<Teil> bereitstellen() {
-		// TODO
-		return null;
+		
+	
+		Stack<Teil> out = new Stack<Teil>();
+		
+		for (int i=0; i<2; i++) {
+			out.add(lager.removeTeil(Teiltyp.AUGE));
+			deleteLastLine(rafs.get(Teiltyp.AUGE));
+		}
+		
+		for (int i=0; i<2; i++) {
+			out.add(lager.removeTeil(Teiltyp.ARM));
+			deleteLastLine(rafs.get(Teiltyp.ARM));
+		}
+		
+		out.add(lager.removeTeil(Teiltyp.RUMPF));
+		deleteLastLine(rafs.get(Teiltyp.RUMPF));
+		
+		out.add(lager.removeTeil(Teiltyp.KETTENANTRIEB));
+		deleteLastLine(rafs.get(Teiltyp.KETTENANTRIEB));
+		
+		return out;
 	}
 
 	/**
@@ -83,6 +102,29 @@ public class Lagermitarbeiter extends Mitarbeiter {
 		for (int i : numbers)
 			sb.append("," + i);
 		return sb.toString();
+	}
+	
+	/**
+	 * Loescht aus einem Teile-File das letzte Teil heraus
+	 * 
+	 * @param f RandomAccessFile des jeweiligen Teils
+	 */
+	private static void deleteLastLine(RandomAccessFile f) {
+		
+		byte b = 0;
+		long length;
+		try {
+			length = f.length() - 1;
+			do {                     
+				  length -= 1;
+				  f.seek(length);
+				  b = f.readByte();
+			} while(b != 10 && length > 0);
+			f.setLength(length+1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**

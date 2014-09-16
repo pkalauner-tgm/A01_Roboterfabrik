@@ -48,8 +48,8 @@ public class Lager {
 	 * Entfernt ein Teil
 	 * @param teil
 	 */
-	public void removeTeil(Teil teil) {
-		teile.get(teil.getTyp()).pop();
+	public Teil removeTeil(Teiltyp teiltyp) {
+		return teile.get(teiltyp).pop();
 	}
 	
 	/**
