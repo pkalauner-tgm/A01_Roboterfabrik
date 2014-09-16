@@ -1,6 +1,7 @@
 package tgm.sew.hit.roboterfabrik.mitarbeiter;
 
 import java.util.Stack;
+import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +22,7 @@ import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
 public class Lieferant implements Runnable {
 	private static final Logger LOG = LogManager.getLogger(Lieferant.class);
 
-	private static final int TEILE_PRO_LIEFERUNG = 1;
+	private static final int TEILE_PRO_LIEFERUNG = 10;
 
 	private Sekretariat sekretariat;
 
@@ -49,12 +50,13 @@ public class Lieferant implements Runnable {
 
 	@Override
 	public void run() {
+		Thread.currentThread().setName("Lieferant");
 		while (Simulation.running) {
 			for (Teiltyp cur : Teiltyp.values()) {
 				LOG.debug("Liefere " + cur);
 				sekretariat.empfangeLieferung(generiereTeile(cur));
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(300);
 				} catch (InterruptedException e) {
 					LOG.error(e);
 				}

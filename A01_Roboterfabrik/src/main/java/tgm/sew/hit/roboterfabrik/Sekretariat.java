@@ -37,8 +37,9 @@ public class Sekretariat {
 
 	private void monteureEinstellen(int anzahlMonteure) {
 		ExecutorService esMonteure = Executors.newFixedThreadPool(anzahlMonteure);
+		
 		for (int i = 0; i < anzahlMonteure; i++) {
-			Montagemitarbeiter mm = new Montagemitarbeiter(generiereMitarbeiterId());
+			Montagemitarbeiter mm = new Montagemitarbeiter(generiereMitarbeiterId(), lagermitarbeiter, this);
 			this.montagemitarbeiter.add(mm);
 			esMonteure.execute(mm);
 		}
@@ -49,14 +50,9 @@ public class Sekretariat {
 		return (int) (Math.random() * 1000) + 1;
 	}
 
-	private int generiereThreadeeId() {
+	public int generiereThreadeeId() {
 		// TODO: no duplicates
 		return (int) (Math.random() * 1000) + 1;
-	}
-	
-	public void befehleMonteure(int anzahl) {
-		Montagemitarbeiter mm = this.montagemitarbeiter.get((int) (Math.random() * this.montagemitarbeiter.size()));
-		lagermitarbeiter.threadeeEinlagern(mm.zusammenbauen(this.lagermitarbeiter.bereitstellen(), generiereThreadeeId()));
 	}
 
 	/**
@@ -65,7 +61,6 @@ public class Sekretariat {
 	 */
 	public synchronized void empfangeLieferung(Stack<Teil> teile) {
 		lagermitarbeiter.einlagern(teile);
-		if (lagermitarbeiter.genugTeile()) befehleMonteure(1);
 	}
 
 }

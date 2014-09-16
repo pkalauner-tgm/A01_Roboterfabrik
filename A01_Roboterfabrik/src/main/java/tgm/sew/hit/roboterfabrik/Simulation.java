@@ -74,7 +74,7 @@ public class Simulation {
 		configLogger(logVerzeichnis);
 		running = true;
 		Lager lager = new Lager();
-		Lagermitarbeiter lm = new Lagermitarbeiter(0, lager, lagerVerzeichnis);
+		Lagermitarbeiter lm = new Lagermitarbeiter(lager, lagerVerzeichnis);
 		Sekretariat sekretariat = new Sekretariat(lm, monteure);
 		ExecutorService esLieferanten = Executors.newFixedThreadPool(lieferanten);
 		Lieferant l = new Lieferant(sekretariat);
