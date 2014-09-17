@@ -62,7 +62,10 @@ public class Lagermitarbeiter {
 
 	public void threadeeEinlagern(Threadee threadee) {
 		try {
-			this.rafThreadee.writeBytes(threadee.toString());
+			if (rafThreadee.length() == 0)
+				rafThreadee.writeBytes(threadee.toString());
+			else
+				rafThreadee.writeBytes("\n" + threadee.toString());
 		} catch (IOException e) {
 			LOG.error("Fehler beim Schreiben in auslieferung.csv", e);
 		}

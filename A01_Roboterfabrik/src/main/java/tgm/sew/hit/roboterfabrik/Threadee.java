@@ -61,27 +61,19 @@ public class Threadee {
 		return this.mitarbeiterId;
 	}
 	
-	/**
-	 * Liefert alle Teile eines Roboters in Form eines Stacks von unten nach oben zurueck
-	 * 
-	 * @return Stack aller Teile
-	 */
-	public Stack<Teil> getTeile() {
-		Stack<Teil> teile = new Stack<Teil>();
-		teile.add(this.kettenantrieb);
-		teile.add(this.armRechts);
-		teile.add(this.armLinks);
-		teile.add(this.rumpf);
-		teile.add(this.augeRechts);
-		teile.add(this.augeLinks);
-		return teile;
-	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		// TODO Mathias
+		sb.append("Threadee-ID" + this.id);
+		sb.append("," + "Mitarbeiter-ID" + this.mitarbeiterId);
+		sb.append("," + this.augeLinks);
+		sb.append("," + this.augeRechts);
+		sb.append("," + this.rumpf);
+		sb.append("," + this.armLinks);
+		sb.append("," + this.armRechts);
+		sb.append("," + this.kettenantrieb);		
 		
 		return sb.toString();
 	}
