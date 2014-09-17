@@ -41,13 +41,16 @@ public class Threadee {
 				this.augeLinks = teil;
 			else
 				this.augeRechts = teil;
+			break;
 		case RUMPF:
 			this.rumpf = teil;
+			break;
 		case ARM:
 			if (this.armLinks == null)
 				this.armLinks = teil;
 			else
 				this.armRechts = teil;
+			break;
 		case KETTENANTRIEB:
 			this.kettenantrieb = teil;
 		}	
