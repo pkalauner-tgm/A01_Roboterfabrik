@@ -1,5 +1,13 @@
 package tgm.sew.hit.roboterfabrik.teil;
 
+/**
+ * Teiltyp
+ * 
+ * Stellt die verschiedenen Arten eines Teils dar.
+ * 
+ * @author Mathias Ritter
+ * @version 1.0
+ */
 public enum Teiltyp {
 	
 	AUGE("Auge"),

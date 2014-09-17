@@ -17,23 +17,43 @@ public class Teil {
 		this.typ = typ;
 		this.numbers = numbers;
 	}
-
+	
+	/**
+	 * 
+	 * @return den {@link Teiltyp}
+	 */
 	public Teiltyp getTyp() {
 		return typ;
 	}
 
+	/**
+	 * 
+	 * @param typ der {@link Teiltyp}
+	 */
 	public void setTyp(Teiltyp typ) {
 		this.typ = typ;
 	}
 
+	/**
+	 * 
+	 * @return die Nummer eines Teils
+	 */
 	public int[] getNumbers() {
 		return numbers;
 	}
 	
+	/**
+	 * 
+	 * @param numbers die Nummer eines Teils
+	 */
 	public void setNumbers(int[] numbers) {
 		this.numbers = numbers;
 	}
 	
+	/**
+	 * Liefert ein Teil als String zurueck:
+	 * Den {@link Teiltyp} und die Nummern eines Teils kommagetrennt
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

@@ -31,6 +31,7 @@ import tgm.sew.hit.roboterfabrik.mitarbeiter.Montagemitarbeiter;
  * Hauptklasse Hier werden die Konsolenargumente auf ihre Richtigkeit ueberprueft sowie die Simulation gestartet.
  * 
  * @author Paul Kalauner 4AHITT
+ * @version 1.0
  *
  */
 public class Simulation {

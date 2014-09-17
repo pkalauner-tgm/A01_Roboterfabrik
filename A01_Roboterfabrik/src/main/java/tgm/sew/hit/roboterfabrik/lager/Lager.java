@@ -16,6 +16,8 @@ import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
  * repraesentiert den Inhalt der Lagerfiles
  * 
  * @author Paul Kalauner 4AHITT
+ * @author Mathias Ritter 4AHITT
+ * @version 1.0
  *
  */
 public class Lager {

@@ -16,6 +16,7 @@ import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
  * Liefert Teile
  * 
  * @author Paul Kalauner 4AHITT
+ * @version 1.0
  *
  */
 public class Lieferant implements Runnable {
@@ -49,6 +50,8 @@ public class Lieferant implements Runnable {
 
 	@Override
 	public void run() {
+		//TODO Javadoc
+		
 		Thread.currentThread().setName("Lieferant");
 		while (Simulation.running) {
 			for (Teiltyp cur : Teiltyp.values()) {
