@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -21,6 +22,7 @@ import org.apache.logging.log4j.core.LoggerContext;
 import tgm.sew.hit.roboterfabrik.lager.Lager;
 import tgm.sew.hit.roboterfabrik.lager.Lagermitarbeiter;
 import tgm.sew.hit.roboterfabrik.mitarbeiter.Lieferant;
+import tgm.sew.hit.roboterfabrik.mitarbeiter.Montagemitarbeiter;
 
 /**
  * Simulation
@@ -75,18 +77,33 @@ public class Simulation {
 		running = true;
 		Lager lager = new Lager();
 		Lagermitarbeiter lm = new Lagermitarbeiter(lager, lagerVerzeichnis);
-		Sekretariat sekretariat = new Sekretariat(lm, monteure);
+		Sekretariat sekretariat = new Sekretariat(lm, lieferanten, monteure);
+
+		// Lieferanten starten
 		ExecutorService esLieferanten = Executors.newFixedThreadPool(lieferanten);
-		Lieferant l = new Lieferant(sekretariat);
 		for (int i = 0; i < lieferanten; i++)
-			esLieferanten.execute(l);
-		
+			esLieferanten.execute(new Lieferant(sekretariat));
+
+		// Monteure starten
+		ExecutorService esMonteure = Executors.newFixedThreadPool(monteure);
+		for (int i = 0; i < monteure; i++)
+			esMonteure.execute(new Montagemitarbeiter(sekretariat.generiereMitarbeiterId(), lm, sekretariat));
+
 		// Programm nach laufzeit beenden
 		new Timer().schedule(new java.util.TimerTask() {
 			@Override
 			public void run() {
 				LOG.info("Stoppe Simulation");
 				running = false;
+
+				esLieferanten.shutdown();
+				esMonteure.shutdown();
+				try {
+					esLieferanten.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+					esMonteure.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+				} catch (InterruptedException e) {
+					LOG.error("Error beim Stoppen der Lieferanten");
+				}
 			}
 		}, laufzeit);
 	}
