@@ -23,19 +23,27 @@ public class Sekretariat {
 
 	private Lagermitarbeiter lagermitarbeiter;
 
+	private int mitarbeiterId;
+	private long threadeeId;
+	
 	public Sekretariat(Lagermitarbeiter lm, int anzahlLieferanten, int anzahlMonteure) {
 		this.lagermitarbeiter = lm;
+		mitarbeiterId = 0;
+		threadeeId = 0;
 	}
 
 	
 	public int generiereMitarbeiterId() {
-		// TODO: no duplicates
-		return (int) (Math.random() * 1000) + 1;
+		return ++this.mitarbeiterId;
 	}
 
-	public int generiereThreadeeId() {
-		// TODO: no duplicates
-		return (int) (Math.random() * 1000) + 1;
+	public long generiereThreadeeId() {
+		if (this.threadeeId == Long.MAX_VALUE) {
+			LOG.error("Maximale Anzahl an Threadees erreicht (2^63)");
+			System.exit(1);
+		}
+			
+		return ++this.threadeeId;
 	}
 
 	/**

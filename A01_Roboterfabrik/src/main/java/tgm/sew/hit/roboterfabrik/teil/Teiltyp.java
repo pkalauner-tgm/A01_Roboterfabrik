@@ -8,7 +8,7 @@ public enum Teiltyp {
 
 	ARM("Arm"),
 
-	KETTENANTRIEB("Kettenatrieb");
+	KETTENANTRIEB("Kettenantrieb");
 	
 	private String name;
 	

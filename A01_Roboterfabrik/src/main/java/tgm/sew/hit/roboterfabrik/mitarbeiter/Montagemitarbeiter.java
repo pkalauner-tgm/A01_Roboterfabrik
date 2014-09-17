@@ -24,7 +24,7 @@ public class Montagemitarbeiter implements Runnable {
 		this.sekretariat = sekretariat;
 	}
 
-	public Threadee zusammenbauen(Stack<Teil> teile, int id) {
+	public Threadee zusammenbauen(Stack<Teil> teile, long id) {
 		LOG.debug("Zusammenbauen " + teile);
 		Threadee roboter = new Threadee(id, this.id);
 		for (Teil t : teile) {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -88,9 +89,10 @@ public class Simulation {
 		ExecutorService esMonteure = Executors.newFixedThreadPool(monteure);
 		for (int i = 0; i < monteure; i++)
 			esMonteure.execute(new Montagemitarbeiter(sekretariat.generiereMitarbeiterId(), lm, sekretariat));
-
-		// Programm nach laufzeit beenden
-		new Timer().schedule(new java.util.TimerTask() {
+		
+		Timer t = new Timer();
+		// Programm nach Laufzeit beenden
+		t.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				LOG.info("Stoppe Simulation");
@@ -101,8 +103,10 @@ public class Simulation {
 				try {
 					esLieferanten.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 					esMonteure.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+					t.cancel();
 				} catch (InterruptedException e) {
 					LOG.error("Error beim Stoppen der Lieferanten");
+					System.exit(1);
 				}
 			}
 		}, laufzeit);

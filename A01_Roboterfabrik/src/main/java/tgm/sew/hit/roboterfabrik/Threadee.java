@@ -1,12 +1,10 @@
 package tgm.sew.hit.roboterfabrik;
 
-import java.util.Stack;
-
 import tgm.sew.hit.roboterfabrik.teil.Teil;
 
 public class Threadee {
 
-	private int id;
+	private long id;
 	
 	private int mitarbeiterId;
 
@@ -22,7 +20,7 @@ public class Threadee {
 
 	private Teil kettenantrieb;
 	
-	public Threadee(int id, int mitarbeiterId) {
+	public Threadee(long id, int mitarbeiterId) {
 		this.id = id;
 		this.mitarbeiterId = mitarbeiterId;
 	}
@@ -56,7 +54,7 @@ public class Threadee {
 		}	
 	}
 	
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 	
