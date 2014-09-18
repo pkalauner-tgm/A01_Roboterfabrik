@@ -3,11 +3,8 @@ package tgm.sew.hit.roboterfabrik;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -40,8 +37,6 @@ public class Simulation {
 
 	private static final int MAX_LAUFZEIT = 3600000;
 	private static final int MAX_ARBEITER = 1000;
-
-	public static boolean running;
 
 	public static void main(String[] args) {
 		if (!checkArgs(args))
@@ -76,41 +71,29 @@ public class Simulation {
 	private static void start(int lieferanten, int monteure, int laufzeit, File lagerVerzeichnis, File logVerzeichnis) {
 		LOG.info("Starte Simulation");
 		configLogger(logVerzeichnis);
-		running = true;
 		Lager lager = new Lager();
 		Lagermitarbeiter lm = new Lagermitarbeiter(lager, lagerVerzeichnis);
 		Sekretariat sekretariat = new Sekretariat(lm, lieferanten, monteure);
-
+		Watchdog wd = new Watchdog(laufzeit);
+		
 		// Lieferanten starten
 		ExecutorService esLieferanten = Executors.newFixedThreadPool(lieferanten);
-		for (int i = 0; i < lieferanten; i++)
-			esLieferanten.execute(new Lieferant(sekretariat));
+		for (int i = 0; i < lieferanten; i++) {
+			Lieferant l = new Lieferant(sekretariat);
+			wd.addWatchable(l);
+			esLieferanten.execute(l);
+		}
 
+		esLieferanten.shutdown();
 		// Monteure starten
 		ExecutorService esMonteure = Executors.newFixedThreadPool(monteure);
-		for (int i = 0; i < monteure; i++)
-			esMonteure.execute(new Montagemitarbeiter(sekretariat.generiereMitarbeiterId(), lm, sekretariat));
-		
-		Timer t = new Timer();
-		// Programm nach Laufzeit beenden
-		t.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				LOG.info("Stoppe Simulation");
-				running = false;
-
-				esLieferanten.shutdown();
-				esMonteure.shutdown();
-				try {
-					esLieferanten.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-					esMonteure.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-					t.cancel();
-				} catch (InterruptedException e) {
-					LOG.error("Error beim Stoppen der Lieferanten");
-					System.exit(1);
-				}
-			}
-		}, laufzeit);
+		for (int i = 0; i < monteure; i++) {
+			Montagemitarbeiter mm =new Montagemitarbeiter(sekretariat.generiereMitarbeiterId(), lm, sekretariat);
+			wd.addWatchable(mm);
+			esMonteure.execute(mm);
+		}
+		esMonteure.shutdown();
+		new Thread(wd).start();
 	}
 
 	/**

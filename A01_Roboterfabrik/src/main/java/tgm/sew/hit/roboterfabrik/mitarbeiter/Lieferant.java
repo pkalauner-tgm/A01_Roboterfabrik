@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tgm.sew.hit.roboterfabrik.Sekretariat;
-import tgm.sew.hit.roboterfabrik.Simulation;
+import tgm.sew.hit.roboterfabrik.WatchableWorker;
 import tgm.sew.hit.roboterfabrik.teil.Teil;
 import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
 
@@ -19,15 +19,16 @@ import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
  * @version 1.0
  *
  */
-public class Lieferant implements Runnable {
+public class Lieferant implements WatchableWorker {
 	private static final Logger LOG = LogManager.getLogger(Lieferant.class);
 
 	private static final int TEILE_PRO_LIEFERUNG = 10;
-
+	private boolean running;
 	private Sekretariat sekretariat;
 
 	public Lieferant(Sekretariat sekretariat) {
 		this.sekretariat = sekretariat;
+		this.running = true;
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class Lieferant implements Runnable {
 		//TODO Javadoc
 		
 		Thread.currentThread().setName("Lieferant");
-		while (Simulation.running) {
+		while (this.running) {
 			for (Teiltyp cur : Teiltyp.values()) {
 				LOG.debug("Liefere " + cur);
 				sekretariat.empfangeLieferung(generiereTeile(cur));
@@ -64,5 +65,10 @@ public class Lieferant implements Runnable {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void stopThread() {
+		this.running = false;
 	}
 }
