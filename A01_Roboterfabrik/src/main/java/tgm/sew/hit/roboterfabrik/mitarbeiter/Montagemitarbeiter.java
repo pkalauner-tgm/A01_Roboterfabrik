@@ -65,11 +65,13 @@ public class Montagemitarbeiter implements WatchableWorker {
 
 	@Override
 	public void run() {
-		// TODO Paul fragen und JavaDoc
 		Thread.currentThread().setName("Monteur ID " + this.id);
 		while (this.running) {
+			// WICHTIG! synchronized
+			// ansonsten ist es moeglich, dass der Inhalt des Files nicht mit dem Teilcounter uebereinstimmt!
 			synchronized (lagermitarbeiter) {
 				if (this.lagermitarbeiter.genugTeile()) {
+					// wenn genug Teile vorhanden sind, Teile aus File holen lassen und Threadee zusammenbauen
 					lagermitarbeiter.threadeeEinlagern(zusammenbauen(lagermitarbeiter.bereitstellen(), sekretariat.generiereThreadeeId()));
 				}
 			}
@@ -85,7 +87,7 @@ public class Montagemitarbeiter implements WatchableWorker {
 	}
 
 	@Override
-	public void stopThread() {
+	public void stopWorker() {
 		this.running = false;
 	}
 }

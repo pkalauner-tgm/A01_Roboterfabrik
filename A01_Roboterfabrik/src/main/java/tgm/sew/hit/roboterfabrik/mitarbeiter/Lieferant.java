@@ -51,8 +51,6 @@ public class Lieferant implements WatchableWorker {
 
 	@Override
 	public void run() {
-		//TODO Javadoc
-		
 		Thread.currentThread().setName("Lieferant");
 		while (this.running) {
 			for (Teiltyp cur : Teiltyp.values()) {
@@ -68,7 +66,7 @@ public class Lieferant implements WatchableWorker {
 	}
 
 	@Override
-	public void stopThread() {
+	public void stopWorker() {
 		this.running = false;
 	}
 }

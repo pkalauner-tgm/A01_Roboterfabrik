@@ -161,12 +161,17 @@ public class Lagermitarbeiter {
 		return lastLine;
 	}
 
+	/**
+	 * Wandelt die String Repraesentation eines Teils in ein Teil Objekt um
+	 * @param s String Repraesentation eines Teils
+	 * @return Teil Objekt
+	 */
 	private static Teil stringToTeil(String s) {
-		// TODO Javadoc
-
 		Teiltyp typ = null;
 
 		String[] arr = s.split(",");
+		
+		// Typ bestimmen
 		for (Teiltyp cur : Teiltyp.values()) {
 			if (cur.getName().equalsIgnoreCase(arr[0])) {
 				typ = cur;

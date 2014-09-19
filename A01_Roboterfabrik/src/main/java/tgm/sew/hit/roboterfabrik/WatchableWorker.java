@@ -1,5 +1,14 @@
 package tgm.sew.hit.roboterfabrik;
 
+/**
+ * WatchableWorker
+ * 
+ * @author Paul Kalauner 4AHITT
+ *
+ */
 public interface WatchableWorker extends Runnable {
-	public void stopThread();
+	/**
+	 * Stoppt den Worker
+	 */
+	public void stopWorker();
 }
