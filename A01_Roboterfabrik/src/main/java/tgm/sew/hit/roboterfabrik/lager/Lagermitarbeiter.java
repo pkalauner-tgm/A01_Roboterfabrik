@@ -68,7 +68,7 @@ public class Lagermitarbeiter {
 	 * @param threadee
 	 *            {@link Threadee}, der eingelagert werden soll
 	 */
-	public void threadeeEinlagern(Threadee threadee) {
+	public synchronized void threadeeEinlagern(Threadee threadee) {
 		try {
 			if (rafThreadee.length() == 0)
 				rafThreadee.writeBytes(threadee.toString());
