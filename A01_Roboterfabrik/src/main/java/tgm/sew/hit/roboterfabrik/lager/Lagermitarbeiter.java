@@ -25,8 +25,7 @@ import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
  *
  */
 public class Lagermitarbeiter {
-	private static final Logger LOG = LogManager
-			.getLogger(Lagermitarbeiter.class);
+	private static final Logger LOG = LogManager.getLogger(Lagermitarbeiter.class);
 	private EnumMap<Teiltyp, RandomAccessFile> rafs;
 	private Lager lager;
 	private RandomAccessFile rafThreadee;
@@ -46,8 +45,7 @@ public class Lagermitarbeiter {
 	 * @param lagerVerzeichnisFile
 	 * @throws FileNotFoundException
 	 */
-	private void initRafs(File lagerVerzeichnisFile)
-			throws FileNotFoundException {
+	private void initRafs(File lagerVerzeichnisFile) throws FileNotFoundException {
 		LOG.debug("Initialisiere RandomAccessFiles");
 		this.rafs = new EnumMap<Teiltyp, RandomAccessFile>(Teiltyp.class);
 		File f = new File(lagerVerzeichnisFile, "auslieferung.csv");
@@ -55,8 +53,7 @@ public class Lagermitarbeiter {
 			f.delete();
 		this.rafThreadee = new RandomAccessFile(f.getAbsolutePath(), "rw");
 		for (Teiltyp cur : Teiltyp.values()) {
-			f = new File(lagerVerzeichnisFile, cur.toString().toLowerCase()
-					+ ".csv");
+			f = new File(lagerVerzeichnisFile, cur.toString().toLowerCase() + ".csv");
 			LOG.debug(f.getAbsolutePath());
 			// alte Files loeschen
 			if (f.exists())
@@ -66,8 +63,7 @@ public class Lagermitarbeiter {
 	}
 
 	/**
-	 * Ein Threadee wird in das File auslieferung.csv mittels
-	 * {@link RandomAccessFile} geschrieben
+	 * Ein Threadee wird in das File auslieferung.csv mittels {@link RandomAccessFile} geschrieben
 	 * 
 	 * @param threadee
 	 *            {@link Threadee}, der eingelagert werden soll
@@ -84,13 +80,11 @@ public class Lagermitarbeiter {
 	}
 
 	/**
-	 * Liefert alle {@link Teil}e zurueck, die fuer einen Threadee benoetigt
-	 * werden: 2 Augen, 2 Arme, 1 Rumpf, 1 Kettenantrieb. Dabei werden die Teile
-	 * aus dem {@link Lager} und dem File mittels {@link RandomAccessFile}
+	 * Liefert alle {@link Teil}e zurueck, die fuer einen Threadee benoetigt werden: 2 Augen, 2 Arme, 1 Rumpf, 1
+	 * Kettenantrieb. Dabei werden die Teile aus dem {@link Lager} und dem File mittels {@link RandomAccessFile}
 	 * entfernt.
 	 * 
-	 * @return Einen {@link Stack} mit allen {@link Teil}en, die fuer einen
-	 *         {@link Threadee} benoetigt werden
+	 * @return Einen {@link Stack} mit allen {@link Teil}en, die fuer einen {@link Threadee} benoetigt werden
 	 */
 	public synchronized Stack<Teil> bereitstellen() {
 		Stack<Teil> out = new Stack<Teil>();
@@ -130,8 +124,7 @@ public class Lagermitarbeiter {
 	}
 
 	/**
-	 * Loescht aus einem Teile-File mittels {@link RandomAccessFile} das letzte
-	 * Teil heraus
+	 * Loescht aus einem Teile-File mittels {@link RandomAccessFile} das letzte Teil heraus
 	 * 
 	 * @param f
 	 *            {@link RandomAccessFile} des jeweiligen Teils
@@ -146,9 +139,8 @@ public class Lagermitarbeiter {
 			StringBuffer sb = new StringBuffer();
 
 			/*
-			 * Der Cursor wird vom Ende des Files so weit zurueckbewegt, sodass
-			 * dieser beim letzten Zeilenumbruch (\n) steht.
-			 * Die Laenge des Files wird auf die Position des Cursors reduziert.
+			 * Der Cursor wird vom Ende des Files so weit zurueckbewegt, sodass dieser beim letzten Zeilenumbruch (\n)
+			 * steht. Die Laenge des Files wird auf die Position des Cursors reduziert.
 			 */
 			do {
 				length -= 1;
@@ -168,14 +160,16 @@ public class Lagermitarbeiter {
 
 	/**
 	 * Wandelt die String Repraesentation eines Teils in ein Teil Objekt um
-	 * @param s String Repraesentation eines Teils
+	 * 
+	 * @param s
+	 *            String Repraesentation eines Teils
 	 * @return Teil Objekt
 	 */
 	private static Teil stringToTeil(String s) {
 		Teiltyp typ = null;
 
 		String[] arr = s.split(",");
-		
+
 		// Typ bestimmen
 		for (Teiltyp cur : Teiltyp.values()) {
 			if (cur.getName().equalsIgnoreCase(arr[0])) {
@@ -196,14 +190,12 @@ public class Lagermitarbeiter {
 	}
 
 	/**
-	 * Ueberprueft, ob genug Teile fuer einen Threadee da sind. Ein Threadee
-	 * besteht aus 2 Augen, 2 Armen, 1 Rumpf und 1 Kettenantrieb.
+	 * Ueberprueft, ob genug Teile fuer einen Threadee da sind. Ein Threadee besteht aus 2 Augen, 2 Armen, 1 Rumpf und 1
+	 * Kettenantrieb.
 	 * 
 	 * @return Ob genug Teile fuer einen Threadee da sind
 	 */
 	public boolean genugTeile() {
-		return lager.teileDa(2, Teiltyp.AUGE) && lager.teileDa(2, Teiltyp.ARM)
-				&& lager.teileDa(1, Teiltyp.RUMPF)
-				&& lager.teileDa(1, Teiltyp.KETTENANTRIEB);
+		return lager.teileDa(2, Teiltyp.AUGE) && lager.teileDa(2, Teiltyp.ARM) && lager.teileDa(1, Teiltyp.RUMPF) && lager.teileDa(1, Teiltyp.KETTENANTRIEB);
 	}
 }

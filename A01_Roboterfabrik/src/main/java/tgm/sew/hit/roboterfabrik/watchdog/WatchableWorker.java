@@ -1,4 +1,4 @@
-package tgm.sew.hit.roboterfabrik;
+package tgm.sew.hit.roboterfabrik.watchdog;
 
 /**
  * WatchableWorker

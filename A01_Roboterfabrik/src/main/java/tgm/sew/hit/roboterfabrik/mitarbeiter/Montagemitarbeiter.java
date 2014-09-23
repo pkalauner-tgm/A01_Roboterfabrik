@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import tgm.sew.hit.roboterfabrik.Sekretariat;
 import tgm.sew.hit.roboterfabrik.Threadee;
-import tgm.sew.hit.roboterfabrik.WatchableWorker;
 import tgm.sew.hit.roboterfabrik.lager.Lagermitarbeiter;
 import tgm.sew.hit.roboterfabrik.teil.Teil;
+import tgm.sew.hit.roboterfabrik.watchdog.WatchableWorker;
 
 /**
  * Montagemitarbeiter

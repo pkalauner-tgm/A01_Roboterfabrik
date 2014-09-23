@@ -30,8 +30,7 @@ public class Sekretariat {
 	private long threadeeId;
 
 	/**
-	 * Die Counter werden initialisiert und der {@link Lagermitarbeiter} wird
-	 * zugewiesen.
+	 * Die Counter werden initialisiert und der {@link Lagermitarbeiter} wird zugewiesen.
 	 * 
 	 * @param lm
 	 *            Zustaendiger {@link Lagermitarbeiter}
@@ -40,16 +39,15 @@ public class Sekretariat {
 	 * @param anzahlMonteure
 	 *            Die Anzahl der {@link Montagemitarbeiter}
 	 */
-	public Sekretariat(Lagermitarbeiter lm, int anzahlLieferanten,
-			int anzahlMonteure) {
+	public Sekretariat(Lagermitarbeiter lm, int anzahlLieferanten, int anzahlMonteure) {
 		this.lagermitarbeiter = lm;
 		mitarbeiterId = 0;
 		threadeeId = 0;
 	}
 
 	/**
-	 * Generiert die Id fuer einen {@link Montagemitarbeiter}, indem zuerst der Counter
-	 * {@code mitarbeiterId} erhoeht wird.
+	 * Generiert die Id fuer einen {@link Montagemitarbeiter}, indem zuerst der Counter {@code mitarbeiterId} erhoeht
+	 * wird.
 	 * 
 	 * @return Die Id fuer einen {@link Montagemitarbeiter}
 	 */
@@ -58,8 +56,7 @@ public class Sekretariat {
 	}
 
 	/**
-	 * Generiert die Id fuer einen {@link Threadee}, indem der Counter
-	 * {@code mitarbeiterId} erhoeht wird.
+	 * Generiert die Id fuer einen {@link Threadee}, indem der Counter {@code mitarbeiterId} erhoeht wird.
 	 * 
 	 * @return Die Id fuer einen {@link Threadee}
 	 */
@@ -73,8 +70,7 @@ public class Sekretariat {
 	}
 
 	/**
-	 * Lieferung entgegennehmen und Monteur beauftragen, einen Threadee
-	 * zusammenzubauen.
+	 * Lieferung entgegennehmen und Monteur beauftragen, einen Threadee zusammenzubauen.
 	 * 
 	 * @param teile
 	 *            Die gelieferten Teile des Lieferanten

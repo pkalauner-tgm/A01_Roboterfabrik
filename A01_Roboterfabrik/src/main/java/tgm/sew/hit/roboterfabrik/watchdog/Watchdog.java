@@ -1,4 +1,5 @@
-package tgm.sew.hit.roboterfabrik;
+package tgm.sew.hit.roboterfabrik.watchdog;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,12 +23,12 @@ public class Watchdog implements Runnable {
 	public void addWatchable(WatchableWorker watchable) {
 		this.watchables.add(watchable);
 	}
-	
+
 	public void stopAll() {
 		for (WatchableWorker cur : watchables)
 			cur.stopWorker();
 	}
-	
+
 	@Override
 	public void run() {
 		try {

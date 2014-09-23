@@ -21,6 +21,7 @@ import tgm.sew.hit.roboterfabrik.lager.Lager;
 import tgm.sew.hit.roboterfabrik.lager.Lagermitarbeiter;
 import tgm.sew.hit.roboterfabrik.mitarbeiter.Lieferant;
 import tgm.sew.hit.roboterfabrik.mitarbeiter.Montagemitarbeiter;
+import tgm.sew.hit.roboterfabrik.watchdog.Watchdog;
 
 /**
  * Simulation
@@ -75,7 +76,7 @@ public class Simulation {
 		Lagermitarbeiter lm = new Lagermitarbeiter(lager, lagerVerzeichnis);
 		Sekretariat sekretariat = new Sekretariat(lm, lieferanten, monteure);
 		Watchdog wd = new Watchdog(laufzeit);
-		
+
 		// Lieferanten starten
 		ExecutorService esLieferanten = Executors.newFixedThreadPool(lieferanten);
 		for (int i = 0; i < lieferanten; i++) {
@@ -88,7 +89,7 @@ public class Simulation {
 		// Monteure starten
 		ExecutorService esMonteure = Executors.newFixedThreadPool(monteure);
 		for (int i = 0; i < monteure; i++) {
-			Montagemitarbeiter mm =new Montagemitarbeiter(sekretariat.generiereMitarbeiterId(), lm, sekretariat);
+			Montagemitarbeiter mm = new Montagemitarbeiter(sekretariat.generiereMitarbeiterId(), lm, sekretariat);
 			wd.addWatchable(mm);
 			esMonteure.execute(mm);
 		}

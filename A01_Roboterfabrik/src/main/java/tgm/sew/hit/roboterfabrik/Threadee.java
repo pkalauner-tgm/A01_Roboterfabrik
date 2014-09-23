@@ -29,14 +29,12 @@ public class Threadee {
 	private Teil kettenantrieb;
 
 	/**
-	 * Die {@code id} und die {@code mitarbeiterId} wird einem neuen Threadee
-	 * zugewiesen
+	 * Die {@code id} und die {@code mitarbeiterId} wird einem neuen Threadee zugewiesen
 	 * 
 	 * @param id
 	 *            {@code id} eines Threadees
 	 * @param mitarbeiterId
-	 *            {@code mitarbeiterId} des Mitarbeiters, der den Threadee
-	 *            zusammenbaut
+	 *            {@code mitarbeiterId} des Mitarbeiters, der den Threadee zusammenbaut
 	 */
 	public Threadee(long id, int mitarbeiterId) {
 		this.id = id;
@@ -44,9 +42,8 @@ public class Threadee {
 	}
 
 	/**
-	 * Mit dieser Methode werden die Teile im Roboter verbaut. Da sich das linke
-	 * und rechte Auge bzw. der linke und rechte Arm nicht unterscheiden, wird
-	 * zuerst jeweils das linke Teil und dann erst das rechte Teil verbaut.
+	 * Mit dieser Methode werden die Teile im Roboter verbaut. Da sich das linke und rechte Auge bzw. der linke und
+	 * rechte Arm nicht unterscheiden, wird zuerst jeweils das linke Teil und dann erst das rechte Teil verbaut.
 	 * 
 	 * @param teil
 	 *            Das Teil, das verbaut werden soll
@@ -74,16 +71,14 @@ public class Threadee {
 	}
 
 	/**
-	 * Setzt alle Infos ueber einen Threadee kommagetrennt zu einem String
-	 * zusammen: die {@code id} des Threadees, die {@code Mitarbeiterid} des
-	 * Mitarbeiters, der den Threadee zusammengebaut hat, die {@link Teil}e des
-	 * Threadees
+	 * Setzt alle Infos ueber einen Threadee kommagetrennt zu einem String zusammen: die {@code id} des Threadees, die
+	 * {@code Mitarbeiterid} des Mitarbeiters, der den Threadee zusammengebaut hat, die {@link Teil}e des Threadees
 	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		//Alle Teile zum StringBuilder hinzufuegen
+		// Alle Teile zum StringBuilder hinzufuegen
 		sb.append("Threadee-ID" + this.id);
 		sb.append("," + "Mitarbeiter-ID" + this.mitarbeiterId);
 		sb.append("," + this.augeLinks);
@@ -106,8 +101,7 @@ public class Threadee {
 
 	/**
 	 * 
-	 * @return Die {@code mitarbeiterId} des Mitarbeiters, der den Threadee
-	 *         zusammengebaut hat
+	 * @return Die {@code mitarbeiterId} des Mitarbeiters, der den Threadee zusammengebaut hat
 	 */
 	public int getMitarbeiterId() {
 		return this.mitarbeiterId;

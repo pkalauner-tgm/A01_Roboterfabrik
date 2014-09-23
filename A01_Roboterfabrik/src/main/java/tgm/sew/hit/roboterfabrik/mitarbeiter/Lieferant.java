@@ -6,9 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tgm.sew.hit.roboterfabrik.Sekretariat;
-import tgm.sew.hit.roboterfabrik.WatchableWorker;
 import tgm.sew.hit.roboterfabrik.teil.Teil;
 import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
+import tgm.sew.hit.roboterfabrik.watchdog.WatchableWorker;
 
 /**
  * Lieferant

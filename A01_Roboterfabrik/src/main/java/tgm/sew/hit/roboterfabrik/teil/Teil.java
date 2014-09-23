@@ -17,7 +17,7 @@ public class Teil {
 		this.typ = typ;
 		this.numbers = numbers;
 	}
-	
+
 	/**
 	 * 
 	 * @return den {@link Teiltyp}
@@ -28,7 +28,8 @@ public class Teil {
 
 	/**
 	 * 
-	 * @param typ der {@link Teiltyp}
+	 * @param typ
+	 *            der {@link Teiltyp}
 	 */
 	public void setTyp(Teiltyp typ) {
 		this.typ = typ;
@@ -41,24 +42,24 @@ public class Teil {
 	public int[] getNumbers() {
 		return numbers;
 	}
-	
+
 	/**
 	 * 
-	 * @param numbers die Nummer eines Teils
+	 * @param numbers
+	 *            die Nummer eines Teils
 	 */
 	public void setNumbers(int[] numbers) {
 		this.numbers = numbers;
 	}
-	
+
 	/**
-	 * Liefert ein Teil als String zurueck:
-	 * Den {@link Teiltyp} und die Nummern eines Teils kommagetrennt
+	 * Liefert ein Teil als String zurueck: Den {@link Teiltyp} und die Nummern eines Teils kommagetrennt
 	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.typ.getName());
-		for (int i: numbers)
+		for (int i : numbers)
 			sb.append("," + i);
 		return sb.toString();
 	}
