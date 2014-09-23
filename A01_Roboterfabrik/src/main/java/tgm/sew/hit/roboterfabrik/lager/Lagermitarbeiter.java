@@ -145,6 +145,11 @@ public class Lagermitarbeiter {
 			length = f.length();
 			StringBuffer sb = new StringBuffer();
 
+			/*
+			 * Der Cursor wird vom Ende des Files so weit zurueckbewegt, sodass
+			 * dieser beim letzten Zeilenumbruch (\n) steht.
+			 * Die Laenge des Files wird auf die Position des Cursors reduziert.
+			 */
 			do {
 				length -= 1;
 				f.seek(length);

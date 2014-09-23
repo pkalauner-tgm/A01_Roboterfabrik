@@ -48,7 +48,7 @@ public class Sekretariat {
 	}
 
 	/**
-	 * Generiert die Id fuer einen {@link Montagemitarbeiter}, indem der Counter
+	 * Generiert die Id fuer einen {@link Montagemitarbeiter}, indem zuerst der Counter
 	 * {@code mitarbeiterId} erhoeht wird.
 	 * 
 	 * @return Die Id fuer einen {@link Montagemitarbeiter}

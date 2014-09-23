@@ -83,6 +83,7 @@ public class Threadee {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
+		//Alle Teile zum StringBuilder hinzufuegen
 		sb.append("Threadee-ID" + this.id);
 		sb.append("," + "Mitarbeiter-ID" + this.mitarbeiterId);
 		sb.append("," + this.augeLinks);
