@@ -45,7 +45,7 @@ public class Lagermitarbeiter {
 	 * @param lagerVerzeichnisFile
 	 * @throws FileNotFoundException
 	 */
-	private void initRafs(File lagerVerzeichnisFile) throws FileNotFoundException {
+	public void initRafs(File lagerVerzeichnisFile) throws FileNotFoundException {
 		LOG.debug("Initialisiere RandomAccessFiles");
 		this.rafs = new EnumMap<Teiltyp, RandomAccessFile>(Teiltyp.class);
 		File f = new File(lagerVerzeichnisFile, "auslieferung.csv");
@@ -130,7 +130,7 @@ public class Lagermitarbeiter {
 	 *            {@link RandomAccessFile} des jeweiligen Teils
 	 * @return die geloeschte Zeile
 	 */
-	private synchronized String deleteLastLine(RandomAccessFile f) {
+	public synchronized String deleteLastLine(RandomAccessFile f) {
 		byte b = 0;
 		long length;
 		String lastLine = null;
@@ -165,7 +165,7 @@ public class Lagermitarbeiter {
 	 *            String Repraesentation eines Teils
 	 * @return Teil Objekt
 	 */
-	private static Teil stringToTeil(String s) {
+	public static Teil stringToTeil(String s) {
 		Teiltyp typ = null;
 
 		String[] arr = s.split(",");
