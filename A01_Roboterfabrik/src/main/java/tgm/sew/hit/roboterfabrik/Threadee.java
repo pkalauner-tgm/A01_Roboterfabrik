@@ -107,4 +107,30 @@ public class Threadee {
 		return this.mitarbeiterId;
 	}
 
+	public Teil getAugeLinks() {
+		return augeLinks;
+	}
+
+	public Teil getAugeRechts() {
+		return augeRechts;
+	}
+
+	public Teil getRumpf() {
+		return rumpf;
+	}
+
+	public Teil getArmLinks() {
+		return armLinks;
+	}
+
+	public Teil getArmRechts() {
+		return armRechts;
+	}
+
+	public Teil getKettenantrieb() {
+		return kettenantrieb;
+	}
+	
+	
+
 }

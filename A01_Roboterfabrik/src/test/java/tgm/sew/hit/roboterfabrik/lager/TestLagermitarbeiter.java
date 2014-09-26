@@ -16,7 +16,12 @@ import tgm.sew.hit.roboterfabrik.Threadee;
 import tgm.sew.hit.roboterfabrik.teil.Teil;
 import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
 
-
+/**
+ * Testklasse fuer den Lagermitarbeiter {@link Lagermitarbeiter}
+ * 
+ * @author Mathias Ritter 4AHITT
+ * @version 1.0
+ */
 public class TestLagermitarbeiter {
 
 	private Lagermitarbeiter lm;

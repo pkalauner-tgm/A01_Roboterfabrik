@@ -62,8 +62,8 @@ public class Sekretariat {
 	 */
 	public long generiereThreadeeId() {
 		if (this.threadeeId == Long.MAX_VALUE) {
-			LOG.error("Maximale Anzahl an Threadees erreicht (2^63)");
-			System.exit(1);
+			LOG.error("Maximale Anzahl an Threadees erreicht (2^63-1)");
+			throw new RuntimeException("Maximale Anzahl an Threadees erreicht (2^63-1)");
 		}
 
 		return ++this.threadeeId;
@@ -79,5 +79,13 @@ public class Sekretariat {
 		LOG.debug("Nehme Lieferung entgegen");
 		lagermitarbeiter.einlagern(teile);
 	}
+
+	
+	public void setThreadeeId(long id) {
+		this.threadeeId = id;
+	}
+
+	
+	
 
 }

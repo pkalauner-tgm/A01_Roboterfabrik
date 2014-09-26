@@ -32,7 +32,7 @@ public class Lager {
 	/**
 	 * Initialisiert die EnumMap
 	 */
-	private void initMap() {
+	public void initMap() {
 		LOG.debug("Initialisiere Map");
 		this.anzahlTeile = Collections.synchronizedMap(new EnumMap<Teiltyp, Integer>(Teiltyp.class));
 		for (Teiltyp cur : Teiltyp.values())
@@ -56,6 +56,8 @@ public class Lager {
 	 */
 	public void removeTeil(Teiltyp teiltyp) {
 		int old = anzahlTeile.get(teiltyp);
+		if (old == 0) throw new IllegalArgumentException("Es sind keine Teile vom angegebenen Teiltyp vorhanden,"
+				+ "deshalb kann kein Teil mehr entfernt werden");
 		anzahlTeile.put(teiltyp, --old);
 	}
 
@@ -71,5 +73,12 @@ public class Lager {
 	public boolean teileDa(int anzahl, Teiltyp teiltyp) {
 		return (anzahlTeile.get(teiltyp) >= anzahl);
 	}
+
+	public Map<Teiltyp, Integer> getAnzahlTeile() {
+		return anzahlTeile;
+	}
+
+	
+	
 
 }
