@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Stack;
@@ -23,7 +22,6 @@ public class TestLagermitarbeiter {
 	private Lagermitarbeiter lm;
 	private Lager mockedLager;
 	private File f;
-	private String dir;
 
 	/**
 	 * Vor allen Tests wird der Pfad fuer die Files initialisiert sowie als neues File angelegt.
@@ -31,12 +29,11 @@ public class TestLagermitarbeiter {
 	 */
 	@Before
 	public void initAll() {
-		//Aktuelles Verzeichnis der Anwendung ermitteln
-		dir = System.getProperty("user.dir");
-		//Pfad um den unten angegebenen Teil erweitern
-		dir += "/src/test/resources";
-		f = new File(dir);
+		f = new File("./src/test/resources");
 		mockedLager = mock(Lager.class);
+		File file = new File(f, "rumpf.csv");
+		if (file.exists())
+			file.delete();
 
 	}
 
@@ -55,8 +52,8 @@ public class TestLagermitarbeiter {
 	 */
 	@Test
 	public void testInitRafs2() throws IOException {
-		new RandomAccessFile(dir + "/auslieferung.csv", "rw");
-		new RandomAccessFile(dir + "/arm.csv", "rw");
+		new RandomAccessFile(new File(f,"auslieferung.csv"), "rw").close();
+		new RandomAccessFile(new File(f, "arm.csv"), "rw").close();
 		lm = new Lagermitarbeiter(mockedLager, f);
 	}
 
@@ -73,8 +70,9 @@ public class TestLagermitarbeiter {
 		when(mockedThreadee.toString()).thenReturn("Testthreadee");
 
 		lm.threadeeEinlagern(mockedThreadee);
-		RandomAccessFile raf = new RandomAccessFile(dir + "/auslieferung.csv", "r");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "auslieferung.csv"), "r");
 		assertEquals("Testthreadee", raf.readLine());
+		raf.close();
 	}
 
 	/**
@@ -91,7 +89,7 @@ public class TestLagermitarbeiter {
 
 		lm.threadeeEinlagern(mockedThreadee);
 		lm.threadeeEinlagern(mockedThreadee);
-		RandomAccessFile raf = new RandomAccessFile(dir + "/auslieferung.csv", "r");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "auslieferung.csv"), "r");
 		assertEquals("Testthreadee", raf.readLine());
 	}
 
@@ -109,7 +107,7 @@ public class TestLagermitarbeiter {
 		in.add(new Teil(Teiltyp.AUGE, numbers));
 		lm.einlagern(in);
 
-		RandomAccessFile raf = new RandomAccessFile(dir + "/auge.csv", "r");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "auge.csv"), "r");
 		assertEquals("Auge,1,2,3,4,5", raf.readLine());	
 	}
 
@@ -128,7 +126,7 @@ public class TestLagermitarbeiter {
 		in.add(new Teil(Teiltyp.AUGE, numbers));
 		lm.einlagern(in);
 
-		RandomAccessFile raf = new RandomAccessFile(dir + "/auge.csv", "r");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "auge.csv"), "r");
 
 		assertEquals("Auge,1,2,3,4,5", raf.readLine());
 		assertEquals("Auge,1,2,3,4,5", raf.readLine());	
@@ -149,10 +147,11 @@ public class TestLagermitarbeiter {
 		in.add(new Teil(Teiltyp.ARM, numbers));
 		in.add(new Teil(Teiltyp.RUMPF, numbers));
 		lm.einlagern(in);
-
-		RandomAccessFile rafArm = new RandomAccessFile(dir + "/arm.csv", "r");
-		RandomAccessFile rafKettenantrieb = new RandomAccessFile(dir + "/kettenantrieb.csv", "r");
-		RandomAccessFile rafRumpf = new RandomAccessFile(dir + "/rumpf.csv", "r");
+		
+		lm.close();
+		RandomAccessFile rafArm = new RandomAccessFile(new File(f, "arm.csv"), "r");
+		RandomAccessFile rafKettenantrieb = new RandomAccessFile(new File(f, "kettenantrieb.csv"), "r");
+		RandomAccessFile rafRumpf = new RandomAccessFile(new File(f, "rumpf.csv"), "r");
 
 
 		assertEquals("Kettenantrieb,1,2,3,4,5", rafKettenantrieb.readLine());
@@ -168,7 +167,7 @@ public class TestLagermitarbeiter {
 	@Test
 	public void testDeleteLastLine1() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
-		RandomAccessFile raf = new RandomAccessFile(dir + "/rumpf.csv", "rw");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "rumpf.csv"), "rw");
 		raf.writeBytes("Rumpf,1,2,3,4,5");
 		lm.deleteLastLine(raf);
 		raf.seek(0);
@@ -183,7 +182,7 @@ public class TestLagermitarbeiter {
 	@Test
 	public void testDeleteLastLine2() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
-		RandomAccessFile raf = new RandomAccessFile(dir + "/rumpf.csv", "rw");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "rumpf.csv"), "rw");
 		raf.writeBytes("Rumpf,1,2,3,4,5\n");
 		raf.writeBytes("Rumpf,1,2,3,4,5\n");
 		raf.writeBytes("Rumpf,1,2,3,4,5");
@@ -202,7 +201,7 @@ public class TestLagermitarbeiter {
 	@Test
 	public void testDeleteLastLine3() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
-		RandomAccessFile raf = new RandomAccessFile(dir + "/rumpf.csv", "rw");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "rumpf.csv"), "rw");
 		raf.writeBytes("Rumpf,1,2,3,4,5\n");
 		raf.writeBytes("Rumpf,6,7,8,9,10\n");
 		raf.writeBytes("Rumpf,11,12,13,14,15");
@@ -236,17 +235,17 @@ public class TestLagermitarbeiter {
 	public void bereitstellen() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
 
-		RandomAccessFile raf = new RandomAccessFile(dir + "/rumpf.csv", "rw");
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "rumpf.csv"), "rw");
 		raf.writeBytes("Rumpf,1,2,3,4,5");
 
-		raf = new RandomAccessFile(dir + "/kettenantrieb.csv", "rw");
+		raf = new RandomAccessFile(new File(f, "kettenantrieb.csv"), "rw");
 		raf.writeBytes("Kettenantrieb,1,2,3,4,5");
 
-		raf = new RandomAccessFile(dir + "/arm.csv", "rw");
+		raf = new RandomAccessFile(new File(f, "arm.csv"), "rw");
 		raf.writeBytes("Arm,1,2,3,4,5");
 		raf.writeBytes("\nArm,6,7,8,9,10");
 
-		raf = new RandomAccessFile(dir + "/auge.csv", "rw");
+		raf = new RandomAccessFile(new File(f, "auge.csv"), "rw");
 		raf.writeBytes("Auge,1,2,3,4,5");
 		raf.writeBytes("\nAuge,6,7,8,9,10");
 

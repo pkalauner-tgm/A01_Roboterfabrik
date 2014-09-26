@@ -198,4 +198,12 @@ public class Lagermitarbeiter {
 	public boolean genugTeile() {
 		return lager.teileDa(2, Teiltyp.AUGE) && lager.teileDa(2, Teiltyp.ARM) && lager.teileDa(1, Teiltyp.RUMPF) && lager.teileDa(1, Teiltyp.KETTENANTRIEB);
 	}
+
+	public void close() throws IOException {
+		this.rafThreadee.close();
+		for (RandomAccessFile cur : rafs.values()) {
+			cur.close();
+		}
+
+	}
 }
