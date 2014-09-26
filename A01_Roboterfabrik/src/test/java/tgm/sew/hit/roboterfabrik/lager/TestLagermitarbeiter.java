@@ -29,17 +29,26 @@ public class TestLagermitarbeiter {
 	private File f;
 
 	/**
-	 * Vor allen Tests wird der Pfad fuer die Files initialisiert sowie als neues File angelegt.
-	 * Es wird ebenfalls ein Mock-Objekt von Lager initialisiert
+	 * Vor allen Tests wird der Pfad fuer die Files initialisiert sowie als neues File angelegt. Es wird ebenfalls ein
+	 * Mock-Objekt von Lager initialisiert
+	 * @throws InterruptedException 
 	 */
 	@Before
-	public void initAll() {
-		f = new File("./src/test/resources");
+	public void initAll() throws InterruptedException {
+		f = new File("src/test/resources");
 		mockedLager = mock(Lager.class);
 		File file = new File(f, "rumpf.csv");
 		if (file.exists())
 			file.delete();
-
+		file = new File(f, "auge.csv");
+		if (file.exists())
+			file.delete();
+		file = new File(f, "arm.csv");
+		if (file.exists())
+			file.delete();
+		file = new File(f, "kettenantrieb.csv");
+		if (file.exists())
+			file.delete();
 	}
 
 	/**
@@ -53,11 +62,12 @@ public class TestLagermitarbeiter {
 	/**
 	 * Testen, ob die Lager-Files, falls vorhanden, ohne Exception ueberschrieben werden
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testInitRafs2() throws IOException {
-		new RandomAccessFile(new File(f,"auslieferung.csv"), "rw").close();
+		new RandomAccessFile(new File(f, "auslieferung.csv"), "rw").close();
 		new RandomAccessFile(new File(f, "arm.csv"), "rw").close();
 		lm = new Lagermitarbeiter(mockedLager, f);
 	}
@@ -65,7 +75,8 @@ public class TestLagermitarbeiter {
 	/**
 	 * Testen, ob ein Threadee beim Einlagern korrekt in das File geschrieben wird
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testThreadeeEinlagern() throws IOException {
@@ -77,97 +88,59 @@ public class TestLagermitarbeiter {
 		lm.threadeeEinlagern(mockedThreadee);
 		RandomAccessFile raf = new RandomAccessFile(new File(f, "auslieferung.csv"), "r");
 		assertEquals("Testthreadee", raf.readLine());
-		raf.close();
-	}
-
-	/**
-	 * Testen, ob mehrere Threadees beim Einlagern korrekt in das File geschrieben werden
-	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
-	 */
-	@Test
-	public void testThreadeeEinlagern2() throws IOException {
-		lm = new Lagermitarbeiter(mockedLager, f);
-
-		Threadee mockedThreadee = mock(Threadee.class);
-		when(mockedThreadee.toString()).thenReturn("Testthreadee");
-
-		lm.threadeeEinlagern(mockedThreadee);
-		lm.threadeeEinlagern(mockedThreadee);
-		RandomAccessFile raf = new RandomAccessFile(new File(f, "auslieferung.csv"), "r");
-		assertEquals("Testthreadee", raf.readLine());
 	}
 
 	/**
 	 * Testen, ob ein Teil beim Einlagern korrekt in das File geschrieben wird
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testEinlagern() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
-		int[] numbers = {1, 2, 3, 4, 5};
+		int[] numbers = { 1, 2, 3, 4, 5 };
 
-		Stack<Teil> in = new Stack();
-		in.add(new Teil(Teiltyp.AUGE, numbers));
+		Stack<Teil> in = new Stack<Teil>();
+		in.add(new Teil(Teiltyp.ARM, numbers));
 		lm.einlagern(in);
 
-		RandomAccessFile raf = new RandomAccessFile(new File(f, "auge.csv"), "r");
-		assertEquals("Auge,1,2,3,4,5", raf.readLine());	
+		RandomAccessFile raf = new RandomAccessFile(new File(f, "arm.csv"), "r");
+		assertEquals("Arm,1,2,3,4,5", raf.readLine());
+		raf.close();
 	}
 
+
 	/**
-	 * Testen, ob mehrere gleiche Teile beim Einlagern korrekt in das File geschrieben werden
+	 * Testen, ob mehrere Teile beim Einlagern korrekt in die Files geschrieben werden
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testEinlagern2() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
-		int[] numbers = {1, 2, 3, 4, 5};
+		int[] numbers = { 1, 2, 3, 4, 5 };
 
-		Stack<Teil> in = new Stack();
-		in.add(new Teil(Teiltyp.AUGE, numbers));
-		in.add(new Teil(Teiltyp.AUGE, numbers));
-		lm.einlagern(in);
-
-		RandomAccessFile raf = new RandomAccessFile(new File(f, "auge.csv"), "r");
-
-		assertEquals("Auge,1,2,3,4,5", raf.readLine());
-		assertEquals("Auge,1,2,3,4,5", raf.readLine());	
-	}
-
-	/**
-	 * Testen, ob mehrere unterschiedliche Teile beim Einlagern korrekt in die Files geschrieben werden
-	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
-	 */
-	@Test
-	public void testEinlagern3() throws IOException {
-		lm = new Lagermitarbeiter(mockedLager, f);
-		int[] numbers = {1, 2, 3, 4, 5};
-
-		Stack<Teil> in = new Stack();
+		Stack<Teil> in = new Stack<Teil>();
 		in.add(new Teil(Teiltyp.KETTENANTRIEB, numbers));
-		in.add(new Teil(Teiltyp.ARM, numbers));
-		in.add(new Teil(Teiltyp.RUMPF, numbers));
+		in.add(new Teil(Teiltyp.AUGE, numbers));
 		lm.einlagern(in);
-		
-		lm.close();
-		RandomAccessFile rafArm = new RandomAccessFile(new File(f, "arm.csv"), "r");
-		RandomAccessFile rafKettenantrieb = new RandomAccessFile(new File(f, "kettenantrieb.csv"), "r");
-		RandomAccessFile rafRumpf = new RandomAccessFile(new File(f, "rumpf.csv"), "r");
 
+		RandomAccessFile rafArm = new RandomAccessFile(new File(f, "auge.csv"), "r");
+		RandomAccessFile rafKettenantrieb = new RandomAccessFile(new File(f, "kettenantrieb.csv"), "r");
 
 		assertEquals("Kettenantrieb,1,2,3,4,5", rafKettenantrieb.readLine());
-		assertEquals("Arm,1,2,3,4,5", rafArm.readLine());
-		assertEquals("Rumpf,1,2,3,4,5", rafRumpf.readLine());	
+		assertEquals("Auge,1,2,3,4,5", rafArm.readLine());
+		rafArm.close();
+		rafKettenantrieb.close();
 	}
 
 	/**
 	 * Testen, ob aus einem File korrekt die letzte Zeile geloescht wird
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testDeleteLastLine1() throws IOException {
@@ -182,7 +155,8 @@ public class TestLagermitarbeiter {
 	/**
 	 * Testen, ob aus einem File korrekt die letzten Zeilen geloescht werden
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testDeleteLastLine2() throws IOException {
@@ -201,7 +175,8 @@ public class TestLagermitarbeiter {
 	/**
 	 * Testen, ob aus einem File korrekt die letzten Zeilen geloescht werden
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testDeleteLastLine3() throws IOException {
@@ -214,32 +189,33 @@ public class TestLagermitarbeiter {
 		lm.deleteLastLine(raf);
 		raf.seek(0);
 		assertEquals("Rumpf,1,2,3,4,5", raf.readLine());
-	}	
+	}
 
 	/**
 	 * Testen, ob ein String korrekt zu einem Teil zusammengefuegt wird
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void testStringToTeil() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
 		Teil out = lm.stringToTeil("Kettenantrieb,1,2,3,4,5");
-		int[] numbers = {1,2,3,4,5};
+		int[] numbers = { 1, 2, 3, 4, 5 };
 		assertEquals(Teiltyp.KETTENANTRIEB, out.getTyp());
-		for (int i=0; i<numbers.length; i++)
+		for (int i = 0; i < numbers.length; i++)
 			assertEquals(numbers[i], out.getNumbers()[i]);
 	}
 
 	/**
 	 * Testen, ob beim Bereitstellen die korrekten Teile fuer einen Threadee zurueckgegeben werden
 	 * 
-	 * @throws IOException Falls eine Exception beim Lesen/Schreiben auftritt
+	 * @throws IOException
+	 *             Falls eine Exception beim Lesen/Schreiben auftritt
 	 */
 	@Test
 	public void bereitstellen() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
-
 		RandomAccessFile raf = new RandomAccessFile(new File(f, "rumpf.csv"), "rw");
 		raf.writeBytes("Rumpf,1,2,3,4,5");
 
@@ -261,10 +237,8 @@ public class TestLagermitarbeiter {
 		assertEquals("Arm,1,2,3,4,5", out.pop().toString());
 		assertEquals("Auge,1,2,3,4,5", out.pop().toString());
 		assertEquals("Arm,6,7,8,9,10", out.pop().toString());
-		assertEquals("Auge,6,7,8,9,10", out.pop().toString());	
-
+		assertEquals("Auge,6,7,8,9,10", out.pop().toString());
+		raf.close();
 	}
-
-
 
 }
