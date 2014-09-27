@@ -99,12 +99,15 @@ public class Simulation {
 
 	/**
 	 * Ueberprueft die angegebenen Argumente
+	 *
+	 * <br>
+	 * Hinweis: Um diese Methode zu testen, ist der default access modifier erforderlich.
 	 * 
 	 * @param args
 	 * @return true wenn gueltig
 	 */
 	@SuppressWarnings("static-access")
-	private static boolean checkArgs(String[] args) {
+	static boolean checkArgs(String[] args) {
 		Options options = new Options();
 		options.addOption(OptionBuilder.hasArg(true).isRequired().withDescription("Das Verzeichnis zum Lager").create("lager"));
 		options.addOption(OptionBuilder.hasArg(true).isRequired().withDescription("Das Verzeichnis zum Loggen").create("logs"));
@@ -132,9 +135,14 @@ public class Simulation {
 				return false;
 			}
 
-			if (!lager.exists() || !log.exists()) {
-				System.out.println("Das Verzeichnis des Lagers oder des Logs existiert nicht.");
-				return false;
+			if (!lager.exists()) {
+				LOG.info("Erstelle Lager Verzeichnis: " + lager.getAbsolutePath());
+				lager.mkdirs();
+			}
+
+			if (!log.exists()) {
+				LOG.info("Erstelle Log Verzeichnis: " + log.getAbsolutePath());
+				log.mkdirs();
 			}
 
 			start(lieferanten, monteure, laufzeit, lager, log);

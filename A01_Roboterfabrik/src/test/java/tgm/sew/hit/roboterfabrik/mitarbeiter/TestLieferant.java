@@ -1,7 +1,7 @@
 package tgm.sew.hit.roboterfabrik.mitarbeiter;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import java.util.Stack;
 
@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import tgm.sew.hit.roboterfabrik.Sekretariat;
-import tgm.sew.hit.roboterfabrik.lager.Lager;
 import tgm.sew.hit.roboterfabrik.teil.Teil;
 import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
 

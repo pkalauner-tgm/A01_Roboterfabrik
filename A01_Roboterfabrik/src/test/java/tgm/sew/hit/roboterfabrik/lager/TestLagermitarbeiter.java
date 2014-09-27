@@ -35,7 +35,9 @@ public class TestLagermitarbeiter {
 	 */
 	@Before
 	public void initAll() throws InterruptedException {
-		f = new File("src/test/resources");
+		f = new File("src/test/resources/LagermitarbeiterTest");
+		if (!f.exists())
+			f.mkdirs();
 		mockedLager = mock(Lager.class);
 		File file = new File(f, "rumpf.csv");
 		if (file.exists())
@@ -88,6 +90,7 @@ public class TestLagermitarbeiter {
 		lm.threadeeEinlagern(mockedThreadee);
 		RandomAccessFile raf = new RandomAccessFile(new File(f, "auslieferung.csv"), "r");
 		assertEquals("Testthreadee", raf.readLine());
+		raf.close();
 	}
 
 	/**
@@ -145,6 +148,7 @@ public class TestLagermitarbeiter {
 	@Test
 	public void testDeleteLastLine1() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
+		new File(f, "rumpf.csv").delete();
 		RandomAccessFile raf = new RandomAccessFile(new File(f, "rumpf.csv"), "rw");
 		raf.writeBytes("Rumpf,1,2,3,4,5");
 		lm.deleteLastLine(raf);
@@ -200,7 +204,7 @@ public class TestLagermitarbeiter {
 	@Test
 	public void testStringToTeil() throws IOException {
 		lm = new Lagermitarbeiter(mockedLager, f);
-		Teil out = lm.stringToTeil("Kettenantrieb,1,2,3,4,5");
+		Teil out = Lagermitarbeiter.stringToTeil("Kettenantrieb,1,2,3,4,5");
 		int[] numbers = { 1, 2, 3, 4, 5 };
 		assertEquals(Teiltyp.KETTENANTRIEB, out.getTyp());
 		for (int i = 0; i < numbers.length; i++)
