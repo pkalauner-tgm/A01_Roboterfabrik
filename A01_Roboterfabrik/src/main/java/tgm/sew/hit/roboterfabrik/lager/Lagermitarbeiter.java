@@ -42,8 +42,8 @@ public class Lagermitarbeiter {
 	/**
 	 * Initialisiert die RandomAccessFiles
 	 * 
-	 * @param lagerVerzeichnisFile
-	 * @throws FileNotFoundException
+	 * @param lagerVerzeichnisFile das angegebene Verzeichnis fuer das Lager
+	 * @throws FileNotFoundException falls ein Fehler beim initialisieren der RAFs auftritt
 	 */
 	public void initRafs(File lagerVerzeichnisFile) throws FileNotFoundException {
 		LOG.debug("Initialisiere RandomAccessFiles");

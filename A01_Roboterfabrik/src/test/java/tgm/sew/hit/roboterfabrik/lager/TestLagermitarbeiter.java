@@ -31,10 +31,9 @@ public class TestLagermitarbeiter {
 	/**
 	 * Vor allen Tests wird der Pfad fuer die Files initialisiert sowie als neues File angelegt. Es wird ebenfalls ein
 	 * Mock-Objekt von Lager initialisiert
-	 * @throws InterruptedException 
 	 */
 	@Before
-	public void initAll() throws InterruptedException {
+	public void initAll() {
 		f = new File("src/test/resources/LagermitarbeiterTest");
 		if (!f.exists())
 			f.mkdirs();

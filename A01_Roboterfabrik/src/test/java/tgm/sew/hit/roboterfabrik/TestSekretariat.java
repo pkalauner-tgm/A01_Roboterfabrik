@@ -1,7 +1,7 @@
-package tgm.sew.hit.roboterfabrik.test;
+package tgm.sew.hit.roboterfabrik;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,10 +10,8 @@ import java.util.Stack;
 import org.junit.Before;
 import org.junit.Test;
 
-import tgm.sew.hit.roboterfabrik.Sekretariat;
 import tgm.sew.hit.roboterfabrik.lager.Lager;
 import tgm.sew.hit.roboterfabrik.lager.Lagermitarbeiter;
-import tgm.sew.hit.roboterfabrik.mitarbeiter.Lieferant;
 import tgm.sew.hit.roboterfabrik.teil.Teil;
 import tgm.sew.hit.roboterfabrik.teil.Teiltyp;
 

@@ -42,7 +42,7 @@ public class Lager {
 	/**
 	 * Fuegt ein Teil hinzu
 	 * 
-	 * @param teil
+	 * @param teil der Zaehler dieses Teils wird um 1 erhoeht
 	 */
 	public void addTeil(Teil teil) {
 		int old = anzahlTeile.get(teil.getTyp());
@@ -52,7 +52,7 @@ public class Lager {
 	/**
 	 * Entfernt ein Teil
 	 * 
-	 * @param teil
+	 * @param teiltyp der Zaehler dieses Teiltyps wird um 1 verringert
 	 */
 	public void removeTeil(Teiltyp teiltyp) {
 		int old = anzahlTeile.get(teiltyp);

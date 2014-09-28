@@ -12,6 +12,9 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
+			<resource>
+				<directory>src/test/java</directory>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>

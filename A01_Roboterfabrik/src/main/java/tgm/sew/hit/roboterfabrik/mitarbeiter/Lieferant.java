@@ -34,7 +34,7 @@ public class Lieferant implements WatchableWorker {
 	/**
 	 * Generiert Teile fuer den angegebenen Teile
 	 * 
-	 * @param teiltyp
+	 * @param teiltyp Teile dieses Typs werden generiert
 	 * @return Stack der die Teile enthaelt
 	 */
 	public Stack<Teil> generiereTeile(Teiltyp teiltyp) {
